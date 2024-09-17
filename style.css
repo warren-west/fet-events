@@ -1,0 +1,9 @@
+.is-valid {
+    color: darkgreen;
+    font-weight: 400;
+}
+
+.is-error {
+    color: red;
+    font-weight: 700;
+}

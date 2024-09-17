@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events Demo</title>
+    <script src="events.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <button onclick="myFunc()">Click me</button>
+    <div>
+        <p onclick="paraClick()" id="para">Original Text</p>
+
+    </div>
+
+    <form>
+        <label class="is-valid" for="first-name">First Name:</label>
+        <input class="is-valid" id="first-name" type="text" placeholder="John Smith">
+        <br>
+        <br>
+        <label class="is-valid" for="select-cars">Fav Car Brand:</label>
+        <select id="select-cars" class="is-valid">
+            <option id="default-option" value="default">--- Select a car brand: ---</option>
+        </select>
+        <br>
+        <button id="btn-submit-form">Submit Form</button>
+    </form>
+
+
+</body>
+
+</html>
