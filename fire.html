@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glowing Fire</title>
+</head>
+
+<body>
+    <button onclick="fadeImage()">Fade Image</button>
+    <br>
+    <br>
+    <img id="img-bonfire" width="400" src="https://billwardphotography.co.uk/wp-content/uploads/2020/04/IMGP5763-2.jpg" alt="bonfire">
+
+    <script>
+        // Get the img from the DOM
+        const imgBonfire = document.getElementById("img-bonfire")
+
+        function fadeImage() {
+            // initial values - don't adjust
+            let saturation = 100
+            let isFading = true
+            let countPulses = 0
+
+            // adjustable parameters
+            let speed = 10 // between 1 and 20 is good
+            let numPulses = 3 // how many times you want it to fade
+
+            const id = setInterval(() => {
+                console.log("interval fired", saturation)
+
+                // adjust saturation accordingly
+                saturation = isFading ? saturation - speed : saturation + speed
+
+                // set the current saturation
+                imgBonfire.style.filter = `saturate(${saturation}%)`
+
+                // decide if we need to invert fading or rising
+                if (saturation <= 0) {
+                    isFading = false
+
+                    // don't increment number of pulses
+                    // a pulse is only counted when it's faded and risen again
+                }
+                if (saturation >= 100) {
+                    isFading = true
+
+                    // increment the number of pulses we've done
+                    countPulses++
+                    console.log("TURN AROUND", countPulses)
+                }
+
+                // stop the loop if we've hit the number of pulses we want
+                if (countPulses == numPulses) {
+                    clearInterval(id)
+                }
+            }, 25)
+        }
+    </script>
+</body>
+
+</html>

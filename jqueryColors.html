@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Board</title>
+    <style>
+        .block {
+            display: inline-block;
+            /* min-width: 1rem;
+            min-height: 1rem; */
+            padding: 1rem;
+            border: 1px solid black;
+            font-family: monospace;
+            font-size: 0.5rem;
+        }
+
+        .row {
+            /* We need to set line-height to 0 to prevent vertical space between rows if there is no text content */
+            /* line-height: 0; */
+        }
+
+        .dark {
+            background-color: black;
+            color: azure;
+        }
+
+        .light {
+            background-color: azure;
+            color: black;
+        }
+
+        .toggle-color {
+            background-color: coral;
+        }
+    </style>
+    <!-- local: -->
+    <!-- <script src="jq.js"></script> -->
+    <!-- CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script>
+        // using simple 0-based index for rows & cols
+        $("document").ready(function () {
+            // for (let i = 0; i < 8; i++) {
+            //     $("#container").append(`<div id="row${i}" class="row"></div>`)
+            //     for (let j = 0; j < 8; j++)
+            //         $(`#row${i}`).append(`<div>${i},${j}</div>`) // 
+
+            // }
+
+            // let chars = ['a', ..., 'h']
+
+            // Replace our previous logic of looping 0 -> 8 inside looping 0 -> 8
+            // We want our chessboard to display chess notation like this:
+            // https://chessily.com/wp-content/uploads/2022/05/chess-notation-diagram.png
+
+            // count down from 8 to 0 (excluding 0)
+            for (i = 8; i > 0; i--) {
+                $("#container").append(`<div id="row${i}" class="row"></div>`)
+                for (j = 97; j < 105; j++) { // this needs to iterate through letters a-h
+                    // use the ASCII numbers to represent alphabet characters as numbers
+                    // 97 is 'a', and 104 is 'h'. Exclude 105 - 'i'
+                    // https://linuxhint.com/wp-content/uploads/2022/02/word-image-536.png
+                    let char = String.fromCharCode(j)
+                    console.log(i, char)
+                    $(`#row${i}`).append(`<div>${char}${i}</div>`) // 
+                }
+            }
+
+            $("#container").children("div").children().addClass("block")
+            $("div [id^=row]:odd").children(".block:even").addClass("dark").next().addClass("light")
+            $("div [id^=row]:even").children(".block:even").addClass("light").next().addClass("dark")
+            // $('div [id^="row"]:even').children("div:odd").addClass("dark")
+            // $("div [id^=row]:odd").children(".block:odd").addClass("light")
+
+            // Add event listeners for each block that has been generated
+            // Each block will have the exact same functionality attached to it
+            $(".block")
+                .on("mouseenter", function () {
+                    console.log(`mouse entered the div ${$(this).text()}`) // check which block is triggering the event
+                    $(this).css("background-color", generateColor())
+                })
+                .on("mouseleave", function () {
+                    $(this).removeAttr("style") // get rid of the inline "style" attribute on the block element
+                })
+
+            // Generate a random RGB color
+            // Return the color as a CSS-friendly string
+            function generateColor() {
+                // Colors:
+                // 1. Name (preset) ❌
+                // 2. Hex value (hashtags) #00ff00 ❌
+                // 3. RGB (3x 0-255 digits) ✅
+
+                let rgbArray = [0, 0, 0]
+
+                for (let i = 0; i < rgbArray.length; i++)
+                    rgbArray[i] = Math.trunc(Math.random() * 255)
+
+                console.log(rgbArray)
+                return `rgb(${rgbArray[0]},${rgbArray[1]},${rgbArray[2]})`
+            }
+        })
+    </script>
+</head>
+
+<body>
+    <div id="container"></div>
+</body>
+
+</html>

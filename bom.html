@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The BOM</title>
+</head>
+
+<body>
+    <button onclick="timeoutDialog()">Timeout Dialog</button>
+    <button onclick="intervalAddPElements()">Interval P Elements</button>
+
+    <button onclick="fadeImage()">Fade Image</button>
+    <br>
+    <br>
+    <img id="img-bonfire" width="400" src="https://billwardphotography.co.uk/wp-content/uploads/2020/04/IMGP5763-2.jpg"
+        alt="bonfire">
+
+    <script>
+        const imgBonfire = document.getElementById("img-bonfire")
+
+        // setTimeout
+        function timeoutDialog() {
+            let ms = 1500
+
+            setTimeout(() => {
+                alert("This displays after " + ms / 1000 + " seconds!")
+
+            }, ms)
+        }
+
+        // setInterval        
+        function intervalAddPElements() {
+            let count = 1
+            const id = setInterval(() => {
+                const pEl = document.createElement("p")
+                pEl.innerText = count
+                document.body.appendChild(pEl)
+
+                if (count == 5) {
+                    clearInterval(id)
+                    timeoutDialog()
+                }
+
+                count++
+            }, 1000)
+        }
+
+        // setInterval
+        function fadeImage() {
+            let saturation = 100
+            let isFading = true
+            let countPulses = 0
+            let speed = 10 // between 1 and 20 is good
+            let numPulses = 3 // how many times you want it to fade
+
+            const id = setInterval(() => {
+                console.log("interval fired", saturation)
+
+                // adjust saturation accordingly
+                saturation = isFading ? saturation - speed : saturation + speed
+
+                // set the current saturation
+                imgBonfire.style.filter = `saturate(${saturation}%)`
+
+                // decide if we need to invert fading or rising
+                if (saturation <= 0) {
+                    isFading = false
+
+                    // don't increment number of pulses
+                    // a pulse is only counted when it's faded and risen again
+                }
+                if (saturation >= 100) {
+                    isFading = true
+
+                    // increment the number of pulses we've done
+                    countPulses++
+                    console.log("TURN AROUND", countPulses)
+                }
+
+                // stop the loop if we've hit the number of pulses we want
+                if (countPulses == numPulses) {
+                    clearInterval(id)
+                }
+            }, 25)
+        }
+
+        // storage / cookies
+        // console.log("cookie", window.document.cookie)
+        // document.cookie = "warren.west.12345678"
+
+        // localStorage.username = "warren-west"
+        // localStorage.password = "12345678"
+
+        // console.log("storage", window.localStorage)
+    </script>
+</body>
+
+</html>
